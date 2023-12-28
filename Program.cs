@@ -4,6 +4,7 @@ namespace MethodsPractice
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             Console.WriteLine("Haritanın enini ve boyunu giriniz:");
@@ -15,18 +16,44 @@ namespace MethodsPractice
             Point point = new Point(0, 0);
 
             Console.WriteLine("Hareket koordinatlarını giriniz:");
-            var a0 = int.Parse(Console.ReadLine());
-            var a1 = int.Parse(Console.ReadLine());
-            var a2 = int.Parse(Console.ReadLine());
-            var a3 = int.Parse(Console.ReadLine());
 
-            point.Move(a0, a1, a2, a3);
+            string input = Console.ReadLine();
+            string[] numberStrings = input.Split(',');
 
-            Console.WriteLine("Yeni konumunuz: ({0}, {1})", point.X, point.Y);
+            // Listeye sayıları ekliyoruz
+            List<int> numbers = new List<int>();
+
+            foreach (string numberString in numberStrings)
+            {
+                if (int.TryParse(numberString.Trim(), out int number))
+                {
+                    numbers.Add(number);
+                }
+            }
+            /*
+            Console.WriteLine("Girilen sayılar:");
+
+            foreach (int number in numbers)
+            {
+                Console.WriteLine(number);
+            } */
 
             Console.WriteLine("İnsan(1) olarak mı Uzaylı(2) olarak mı ilerlemek istersiniz?");
             var secim = int.Parse(Console.ReadLine());
 
+           // LifeForm.Move(numbers,point);
+
+            LifeForm lifeForm = LifeForm.CreateLifeForm(secim);
+
+            if (lifeForm != null)
+            {
+                lifeForm.Move(numbers, point);
+                lifeForm.PrintPosition(point);
+            }
+            else
+            {
+                Console.WriteLine("Geçersiz seçim. Çıkılıyor.");
+            }
         }
     }
 }
